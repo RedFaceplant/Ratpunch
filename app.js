@@ -12,7 +12,7 @@ function doFunction(){
     if(!color){
         color = "red"
     }
-    color = capitalFirst(color)
+    color = capitalFirst(color.toLowerCase())
     renderTable()
 }
 
@@ -44,11 +44,19 @@ function renderTable(){
     // invert word but preserve space
     const fullName = `${color} Faceplant`
     const spacePos = fullName.indexOf(" ")
-    const Reversed = [...fullName.replace(/\s+/g, '').toLowerCase()].reverse().join("")
-    table.innerHTML += createRow("Tna Lpecafder", `${capitalFirst(Reversed.slice(0,spacePos))+" "+capitalFirst(Reversed.slice(spacePos))}`)
+    const reversed = [...fullName.replace(/\s+/g, '').toLowerCase()].reverse().join("")
+    table.innerHTML += createRow("Tna Lpecafder", `${capitalFirst(reversed.slice(0,spacePos))+" "+capitalFirst(reversed.slice(spacePos))}`)
 
     // remove first letter
     table.innerHTML += createRow("Ed Aceplant", `${capitalFirst(color.slice(1))} Aceplant`)
+
+    // sorted
+    const preSort = fullName.toLowerCase().replace(/\s+/g, '')
+    const sorted = sortString(preSort)
+    table.innerHTML += createRow("Aac Deeflnprt", `${capitalFirst(sorted.slice(0,spacePos))+" "+capitalFirst(sorted.slice(spacePos))}`)
+
+    // no vowels
+    table.innerHTML += createRow("Rd Fcplant", `${capitalFirst(removeVowels(color))} Fcplant`)
 }
 
 
@@ -68,4 +76,13 @@ function createRow(theme, output){
 // thanks to some dude on Stack Overflow
 function capitalFirst(string) {
     return string.slice(0,1).toUpperCase() + string.slice(1);
+}
+
+// thanks to GeeksForGeeks
+function sortString(stringg){
+    return stringg.split("").sort().join("");
+};
+
+function removeVowels(strng){
+    return strng.toLowerCase().replace('a', '').replace('e', '').replace('i', '').replace('o', '').replace('u', '')
 }
